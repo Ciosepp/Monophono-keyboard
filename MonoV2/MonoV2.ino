@@ -13,7 +13,7 @@ int keyboardScan(bool hold){
     int pressedKeys = 0;
 
     if (!hold){
-    	for (int w = 0; w < W; w++){//0->8 columns
+    	for (int w = 0; w < W; w++){ //0->8 columns
             if (w < 8){
                 digitalWrite(WritePinExt, 0);
                 muxWrite(w, WriteMuxPin);
@@ -62,7 +62,7 @@ modes:  0- incremental
 int arpeggioNotes[maxArpVoices];
 bool filled = false;
 int nVoices = 0;
-bool gateOn = false; //to adress as output at int/ext ck function
+bool gateOn = false; // to adress as output at int/ext ck function
 bool aLatch = true;
 int c = 0;
 bool up = true;
@@ -133,7 +133,7 @@ int mono(int oldNote){
             Release = false;
             break;
         }
-  	return y;//pressed key out
+  	return y; //pressed key out
 }
 
 void setup(){
