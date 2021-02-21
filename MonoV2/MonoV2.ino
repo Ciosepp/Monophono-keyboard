@@ -1,6 +1,7 @@
 //MonoV2.ino
 //main file
-#include <monophonoBoardPinHeader.h>
+#include <pin-configuration-board-v2.h>
+#include <keyboard.h>
 
 bool oldkeyboard[N];
 bool transient[N];
@@ -13,10 +14,10 @@ int keyboardScan(bool hold){
     int pressedKeys = 0;
 
     if (!hold){
-    	for (int w = 0; w < W; w++){ //0->8 columns
-            if (w < 8){
+    	for (int columnIndex = 0; columnIndex < W; columnIndex++){ //0->8 columns
+            if (columnIndex < 8){
                 digitalWrite(WritePinExt, 0);
-                muxWrite(w, WriteMuxPin);
+                muxWrite(columnIndex, WriteMuxPin);
       		    digitalWrite(WritePin, 1);
             } else {
                 digitalWrite(WritePinExt, 1);
@@ -137,8 +138,8 @@ int mono(int oldNote){
 }
 
 void setup(){
-    pinInit(); 
-    Serial.begin(baudrate);
+    pinModeInit(); 
+    Serial.begin(115200);
     Serial.print("Mono keyboard firmware 2.0 rev.C");
 
     for (int i = 0; i > N; i++) {
