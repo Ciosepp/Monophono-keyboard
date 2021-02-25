@@ -3,53 +3,13 @@
 #include <pin-configuration-board-v2.h>
 #include <keyboard.h>
 
-bool oldkeyboard[N];
-bool transient[N];
+const short int Nkeys=49;
+const short int nColumn = 9;
+const short int nRow = 6;
+
 bool gate = false;
 bool noteDown = false;
 bool noteUp = false;
-
-int keyboardScan(bool hold){
-    int arpCount = 0;
-    int pressedKeys = 0;
-
-    if (!hold){
-    	for (int columnIndex = 0; columnIndex < W; columnIndex++){ //0->8 columns
-            if (columnIndex < 8){
-                digitalWrite(WritePinExt, 0);
-                muxWrite(columnIndex, WriteMuxPin);
-      		    digitalWrite(WritePin, 1);
-            } else {
-                digitalWrite(WritePinExt, 1);
-                digitalWrite(WritePin, 0);
-            }
-
-            // digitalWrite(WritePinExt,if(w==8));
-            // muxWrite(w,WriteMuxPin);
-            // digitalWrite(WritePin,if(w!=8));
-
-      		for (int r = 0; r < R; r++){ //0->5 rows
-                if (w == 8 && r == 1)
-                    break; //stop at key 49(48)
-
-                muxWrite(r, WriteMuxPin);
-                keyboard[w * R + r] = digitalRead(ReadPin);
-
-                if (oldkeyboard[w * R + r]){
-                    pressedKeys++;
-
-                    if (arpCount < maxArpVoices){ //fill arpegg. array with note to play
-                        arpCount++;
-                        arpeggioNotes[arpCount] = w * R + r;
-                    }
-                }
-           		transient[w * R + r] = oldkeyboard[w * R + r] ^ keyboard[w * R + r]; //XOR
-           		oldkeyboard[w * R + r] = keyboard[w * R + r]; //updating memory vector
-    		}
-    	}
-    }
-    return pressedKeys;
-}
 
 
 /////////////////////////////////////////////////////ARPEGGIATOR/////////////////////
@@ -69,8 +29,6 @@ int c = 0;
 bool up = true;
 
 void arpeggiator(int mode, bool enable){
-
-	keyboardScan();
 
 	if (gateOn && aLatch && nPressedKeys > 0){
 		dac.setVoltage(voltages[arpeggioNotes[c]], false);
@@ -102,40 +60,7 @@ void arpeggiator(int mode, bool enable){
     }
 }
 
-int mono(int oldNote){
-	bool Release = true;
-	int y = oldNote;
-	int nPressedKeys = 0;
 
-  	for(int i = 0; i < N; i++){
-       	if (noteDown(i, keyboard, transient)){  //detect note down
-       		y = i;
-       		dac.setVoltage(voltages[i], false);
-       		gateRefresh();
-       		Serial.println(i);
-            nPressedKeys++;
-       		break;
-       	}
-       	if (noteUp(i, keyboard, transient)){ //detect note release
-      		Release = true;
-            gateOff();
-            nPressedKeys--;
-            break;
-       	}
-        if (Release && nPressedKeys==0){  //only pressed key release handler
-            gateOff();
-            Release = false;
-            break;
-        }
-		if (Release && keyboard[i]){    //release handler selects the first secondly pressed key 
-            y = i;
-            dac.setVoltage(voltages[i], false);
-            gateRefresh();
-            Release = false;
-            break;
-        }
-  	return y; //pressed key out
-}
 
 void setup(){
     pinModeInit(); 

@@ -18,4 +18,6 @@ const short int READ_MUX_ADDRESS_PINS[] = {6, 7, 8};
 #define ARPEGGIATOR_OCTAVE_EXTENSION_PIN 17
 #define SEQUENCER_PIN 20
 
+#define DAC_ADDRES 0X61
+
 #endif
