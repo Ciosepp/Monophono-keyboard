@@ -21,9 +21,9 @@ void gateOff(){
     digitalWrite(gatePin, 0);
 }
 
-void SerialDebug(){
-    for (int i = 0; i < 49; i++){
-		Serial.print(transient[i]);
+void SerialDebug(int N, int* Vector){
+    for (int i = 0; i < N; i++){
+		Serial.print(Vector[i]);
 	}
  	Serial.println("");
 }
