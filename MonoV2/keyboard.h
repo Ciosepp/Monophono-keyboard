@@ -1,12 +1,17 @@
 #ifndef __KEYBOARD_H__
 #define __KEYBOARD_H__
 
-const int N =49; //n. tasti
-int keyboard[N]; //array contenente gli stati di tutti i pulsanti
-uint32_t voltages[N];
-int MaxRowIndex=6,RowIndex=0;
-int MaxColumnIndex=9,columnIndex=0;
-int n=0;
+const int Nkeys =49; //n. tasti
+int keyboard[Nkeys]; //array contenente gli stati di tutti i pulsanti
+uint32_t voltages[Nkeys];
+
+const short int Nkeys=49;
+const short int nColumn = 9;
+const short int nRow = 6;
+
+bool oldkeyboard[Nkeys];
+bool transient[Nkeys];
+
 #define PRESSED 1
 #define UNPRESSED 0
 #define DEBUG_ENABLE true
@@ -15,6 +20,7 @@ int n=0;
 #include <Adafruit_MCP4725.h>
 Adafruit_MCP4725 dac;
 const int maxArpVoices= 7;
+const int nMuxAddressPins = 3;
 
 
 bool noteDown(int i, bool* noteScan, bool* noteTrans)
@@ -29,6 +35,8 @@ void gateOff();
 
 void SerialDebug();
 
+void PrintKeyScan()
+
 void pinModeInit();
     
 void dacInit();
@@ -41,6 +49,16 @@ int getOctave(int pin);
 
 int getMode(int pin);
 
+int getCkRate();
+
 bool readRow(int index);
+
+int keyboardScan();
+
+int mono(int oldNote);
+
+void CvWrite(int note);
+
+bool getGate();
 
 #endif

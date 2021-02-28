@@ -8,8 +8,10 @@
 #define WRITE_MUX_ENABLE_PIN 5
 #define MATRIX_WRITE_EXTERNAL_PIN 13
 const short int WRITE_MUX_ADDRESS_PINS[] = {10, 11, 12};
+const short int WRITE_REROUTING_ARRAY[8] = {0,1,2,3,4,5,6,7};
 #define READ_MUX_OUT_VALUE_PIN 9
 const short int READ_MUX_ADDRESS_PINS[] = {6, 7, 8};
+const short int READ_REROUTING_ARRAY[8] = {0,1,2,3,4,5,6,7};
 
 #define ARPEGGIATOR_CLOCK_IN_PIN 4
 #define ARPEGGIATOR_MODE_PIN 14

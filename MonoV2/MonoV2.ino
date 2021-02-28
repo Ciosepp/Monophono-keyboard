@@ -3,14 +3,9 @@
 #include <pin-configuration-board-v2.h>
 #include <keyboard.h>
 
-const short int Nkeys=49;
-const short int nColumn = 9;
-const short int nRow = 6;
-
 bool gate = false;
 bool noteDown = false;
 bool noteUp = false;
-
 
 /////////////////////////////////////////////////////ARPEGGIATOR/////////////////////
 /*

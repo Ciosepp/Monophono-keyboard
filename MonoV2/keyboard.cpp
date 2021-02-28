@@ -27,7 +27,13 @@ void SerialDebug(int N, int* Vector){
 	}
  	Serial.println("");
 }
-const int nMuxAddressPins = 3;
+void PrintKeyScan(){
+    for (int i = 0; i < N; i++){
+		Serial.print( keyboard[i]);
+	}
+ 	Serial.println("");
+}
+
 void pinModeInit(){
 	
     for(int i = 0; i < nMuxAddressPins; i++){
@@ -86,6 +92,10 @@ int getOctave(int pin){
 
 int getMode(int pin){
     return map(analogRead(pin), 0, 1023, 0, 2);
+}
+
+int getCkRate(){
+    return map(analogRead(ARPEGGIATOR_CLOCK_RATE_PIN), 0, 1023, 60, 300);
 }
 
 int keyboardScan(){
