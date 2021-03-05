@@ -1,9 +1,10 @@
 int arpeggioNotes[maxArpVoices];
 bool filled = false;
 int nVoices = 0;
-bool gateOn = false; // to adress as output at int/ext ck function
 bool aLatch = true;
-int c = 0;
+int arpeggioNoteIndex = 0;
+int arpeggioOctaveIndex=1; //1->4
+short int octJumpInterval = 12;//semitones
 bool goingUp = true;
 /////////////////////////////////////////////////////ARPEGGIATOR/////////////////////
 /*
@@ -12,30 +13,39 @@ modes:  0- incremental
         2- decremental        
 */
 
-void arpeggiatorPlay(int mode, bool enable, int Latching){
+void arpeggiatorPlay(bool gateOn, int mode, bool enable, bool Latching, int octaveExtension){
+	
+	int note = arpeggioNoteIndex + (octJumpInterval*arpeggioOctaveIndex);
 
 	if (gateOn && aLatch && nPressedKeys > 0){
-		dac.setVoltage(voltages[arpeggioNotes[c]], false);
+		CvWrite(arpeggioNotes[note]);
        	gateRefresh();
-       	aLatch = false;
+       	aLatch = false;// detect ck transition
 	}
 
 	if (!gateOn && !aLatch){ 
 		switch (mode){
 			case 0:	
-                c = (c + 1) % maxArpVoices;
+                arpeggioNoteIndex = (arpeggioNoteIndex + 1) % maxArpVoices;
+                
+                arpeggioOctaveIndex= (arpeggioOctaveIndex + 1) % octaveExtension;
+                if((arpeggioNoteIndex + (octJumpInterval*arpeggioOctaveIndex)) >= 60){
+                	arpeggioOctaveIndex = 1;
+                }
                 break;
             case 1: 
-                if (c >= maxArpVoices - 1 && goingUp) goingUp = false; //transition up to down
-                if (c <= 0 && !goingUp) goingUp = true;  //transition down to up
-                if (goingUp) c++;
+                if (arpeggioNoteIndex >= maxArpVoices - 1 && goingUp) goingUp = false; //transition up to down
+                if (arpeggioNoteIndex <= 0 && !goingUp) goingUp = true;  //transition down to up
+                if (goingUp) arpeggioNoteIndex++;
                 else    
-                    c--;
+                    arpeggioNoteIndex--;
                 break;
             case 2: 
-                c = (c - 1) % maxArpVoices;
+                arpeggioNoteIndex = (arpeggioNoteIndex - 1) % maxArpVoices;
                 break;
 		}
+		
+
         aLatch = true;
 	}
 
@@ -54,7 +64,7 @@ void arpeggiatorHoldRecord(int nPressedKeys)
 	                k++;
 	            }
 	            if(k == maxArpVoices)break;
-	     }
+	    }
 	 }
 	 else{
 	 	for (int i = 0; i < maxArpVoices; i++){
@@ -69,26 +79,32 @@ void arpeggiatorLatchRecord(int nPressedKeys)
     {
     	if(arpeggioNotesClean){//clear memory when transition to pressed keys
 
+    		memoryClean();
     		arpeggioNotesClean = false;
-    		for (int i = 0; i < maxArpVoices; i++){
-        		arpeggioNotes[i] = -1;
-        	}
     	} 
-    	else{
-    		arpeggioNotesClean = true; //detect transition
-    	}
+    	
     	int k=0;
 	    for (int i = 0; i < Nkeys; i++)//scan through all keys
 	    {
-	            if(transient[i] == 1)// fills arp notes Vector with pressed notes
-	            { 
-	                arpeggioNotes[k]= i;
-	                k++;
-	            }
-	            if(k == maxArpVoices)break;
+			if(transient[i] == 1)// fills arp notes Vector with pressed notes
+			{ 
+			    arpeggioNotes[k] = i;
+			    k++;
+			}
+			if(k == maxArpVoices || k == nPressedKeys)break;
 	    }
-	 }
-	 
-	 		 
+	}
+	else{ // no pressed keys
+		arpeggioNotesClean = true; //detect transition
+	}	 		 
 }
-
+void memoryClean(){
+	for (int i = 0; i < maxArpVoices; i++){
+        arpeggioNotes[i] = -1;
+    }
+}
+void memoryCleanFromIndex(int index){
+	for (int i = index; i < maxArpVoices; i++){ // fill the rest of the array w -1
+    	arpeggioNotes[i] = -1;
+    }
+}

@@ -49,7 +49,7 @@ void dacInit(){    //funzione che genera le tensioni specifiche per ogni tasto
 	dac.begin(DAC_ADDRES);
 	dac.setVoltage(0, false);
 	
-  	for (uint32_t i = 0; i < N; i++){
+  	for (uint32_t i = 0; i < 60; i++){
     	voltages[i] = i * 4095 / 60;
   	}  	
 }

@@ -20,5 +20,3 @@ const short int READ_MUX_ADDRESS_PINS[] = {6, 7, 8};
 #define SEQUENCER_PIN 20
 
 #endif
-
-cacacacac
