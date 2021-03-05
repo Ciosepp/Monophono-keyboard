@@ -98,6 +98,10 @@ int getCkRate(){
     return map(analogRead(ARPEGGIATOR_CLOCK_RATE_PIN), 0, 1023, 60, 300);
 }
 
+bool getGate(){
+	return digitalRead(ARPEGGIATOR_CLOCK_IN_PIN);
+}
+
 int keyboardScan(){
 
     int columnIndex=0;
@@ -154,9 +158,6 @@ int mono(int oldNote){
   	return y; //pressed key out
 }
 
-bool getGate(){
-	return digitalRead(ARPEGGIATOR_CLOCK_IN_PIN);
-}
 
 int noteIndex=0;
 void arpeggiator(int* notes, int nNotes, int octaveExtension, int mode){

@@ -22,28 +22,16 @@ Adafruit_MCP4725 dac;
 const int maxArpVoices= 7;
 const int nMuxAddressPins = 3;
 
+///////////////////////////initialization functions /////////
+void pinModeInit();
+
+void dacInit();
+
+///////////////////////////input function //////////////////
 
 bool noteDown(int i, bool* noteScan, bool* noteTrans)
 
 bool noteUp(int i, bool* noteScan, bool* noteTrans)
-
-void gateRefresh();
-
-void gateOn();
-
-void gateOff();
-
-void SerialDebug();
-
-void PrintKeyScan()
-
-void pinModeInit();
-    
-void dacInit();
-
-void muxWrite(int val, int* Pins);
-
-void writeColumn(int index);
 
 int getOctave(int pin);
 
@@ -55,10 +43,26 @@ bool readRow(int index);
 
 int keyboardScan();
 
-int mono(int oldNote);
+bool getGate();
+
+///////////////////////////output functions//////////////////
+
+void gateOn();
+
+void gateRefresh();
+
+void gateOff();
 
 void CvWrite(int note);
 
-bool getGate();
+void muxWrite(int val, int* Pins);
+
+void writeColumn(int index);
+
+int mono(int oldNote);
+
+void PrintKeyScan();
+
+void SerialDebug();
 
 #endif
