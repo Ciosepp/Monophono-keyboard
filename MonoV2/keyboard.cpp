@@ -1,4 +1,4 @@
-#include <pin-configuration-board-v2.h>
+#include "pin-configuration-board-v2.h"
 
 bool noteDown(int i, bool* noteScan, bool* noteTrans){
     return noteScan[i] && noteTrans[i];
