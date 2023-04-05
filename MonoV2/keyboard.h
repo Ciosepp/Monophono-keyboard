@@ -1,3 +1,5 @@
+
+
 #ifndef __KEYBOARD_H__
 #define __KEYBOARD_H__
 
@@ -17,7 +19,7 @@ bool transient[Nkeys];
 #define DEBUG_ENABLE true
 
 #include <Wire.h>
-#include <Adafruit_MCP4725.h>
+#include <MCP4725.h>
 Adafruit_MCP4725 dac;
 const int maxArpVoices= 7;
 const int nMuxAddressPins = 3;

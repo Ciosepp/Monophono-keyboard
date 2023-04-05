@@ -1,3 +1,5 @@
+#include "arpeggiator.h"
+
 int arpeggioNotes[maxArpVoices];
 bool filled = false;
 int nVoices = 0;

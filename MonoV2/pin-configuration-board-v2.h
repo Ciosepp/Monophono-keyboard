@@ -6,7 +6,6 @@
 #define CLOCK_OUT_PIN 2
 #define GATE_PIN 3
 
-#define WRITE_MUX_ENABLE_PIN 5
 #define MATRIX_WRITE_EXTERNAL_PIN 13
 const short int WRITE_MUX_ADDRESS_PINS[] = {10, 11, 12};
 #define READ_MUX_OUT_VALUE_PIN 9
