@@ -16,6 +16,10 @@ files:
 		arpeggiator.ino = 	code for the arpeggiator 
 
 */
+#include "hwFunct.h"
+#include "Functions.h"
+#include "monophonoBoardPinHeader.h"
+
 void setup(){
     Serial.begin(115200);
     Serial.print("Mono keyboard firmware 2.0 rev.C");

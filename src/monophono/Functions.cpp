@@ -1,15 +1,17 @@
+#include "Functions.h"
+#include "hwFunct.h"
+#include "monophonoBoardPinHeader.h"
+
+void Init(){
+	pinInit();
+	dacInit();
+}
 
 bool noteDown(int i, bool* noteScan, bool* noteTrans){
 	return noteScan[i]&&noteTrans[i];
 }
 bool noteUp(int i, bool* noteScan, bool* noteTrans){
 	return noteScan[i]&& !noteTrans[i];
-}
-void SerialDebug(){
-	for (int i = 0; i < 49; i++){
-		Serial.print(transient[i]);
-	}
-	Serial.println("");
 }
 
 void elabControls(){
@@ -76,25 +78,26 @@ int mono(int oldNote){
 	return note;
 }
 
+
 void logic(){
 	elabControls();
 		//switch between MONO, arpeggiator HOLD or LATCH
 	switch(arpState){
 		case OFF:
-			NOTE = mono();
-			break;
+		NOTE = mono();
+		break;
 		case HOLD:
-			NOTE = arpeggiatorHold();
-			break;	
+		NOTE = arpeggiatorHold();
+		break;	
 		case LATCH:
-			NOTE = arpeggiatorLatch();
-			break;	
+		NOTE = arpeggiatorLatch();
+		break;	
 	}
 
 }
-int arpFilIndex=0;
-void arpeggiatorHold(){
-		//vector filler
+
+void arpeggiatorHold()//vector filler
+{
 	int nArpeggiatorNotes = nPressedKeys*(1+ARP_OCTAVE);
 	arpFilIndex = 0;
 	for(int i = 0; i < N_KEYS; i++){
@@ -129,8 +132,8 @@ void arpeggiatorHold(){
 	can be stopped only via the its state selector.
 */
 
-bool isRecording = true;
-void arpeggiatorLatch(){
+void arpeggiatorLatch()
+{
 
 	int nArpeggiatorNotes = nPressedKeys*(1+ARP_OCTAVE);
 	if(!isRecording && nPressedKeys >= 1){
@@ -150,7 +153,7 @@ void arpeggiatorLatch(){
 					//break if too many keys are recorded
 				if (arpFilIndex > nPressedKeys)break;
 			}
-					
+
 
 		}	
 			//if octaver is greater than 0
@@ -166,30 +169,31 @@ void arpeggiatorLatch(){
 		}
 	}
 }
-void arpeggiatorTiming(){
+void arpeggiatorTiming()
+{
 			//at clock strike
 	if((pressedKeys>0) && CK_IN && !arpNoteLatch){
 		switch(arpMode){
 			case UP:
-				arpeggiatorIndex = (arpeggiatorIndex++)%nArpeggiatorNotes;
-				break;
+			arpeggiatorIndex = (arpeggiatorIndex++)%nArpeggiatorNotes;
+			break;
 			case UD:
-				if(arpeggiatorIndex>=nArpeggiatorNotes){
-					UD = true;	
-				}
-				if(arpeggiatorIndex<=0){
-					UD = false;	
-				}
-				if(!UD)
+			if(arpeggiatorIndex>=nArpeggiatorNotes){
+				UD = true;	
+			}
+			if(arpeggiatorIndex<=0){
+				UD = false;	
+			}
+			if(!UD)
 						//if top
-					arpeggiatorIndex++;
-				
-				else
-					arpeggiatorIndex--;	
-				break;	
+				arpeggiatorIndex++;
+
+			else
+				arpeggiatorIndex--;	
+			break;	
 			case DOWN:
-				arpeggiatorIndex = (arpeggiatorIndex+nArpeggiatorNotes-1)%nArpeggiatorNotes;
-				break;
+			arpeggiatorIndex = (arpeggiatorIndex+nArpeggiatorNotes-1)%nArpeggiatorNotes;
+			break;
 		}
 		gateRefresh();
 		arpNoteLatch = true;
@@ -199,12 +203,22 @@ void arpeggiatorTiming(){
 	if(pressedKeys ==0)arpeggiatorIndex =0;
 }
 
-void arpeggiatorLatch(){
-	for(int i = 0; i < N_KEYS; i++){
-	}
-}
-void readInputs(){
+
+void readInputs()
+{
 	scanKeyboard(pressedKeys);
 	scanControls();
-	elabControls();
+}
+
+int oldNote =0;
+bool oldGateState = false;
+
+void output()
+{
+	if(Note != oldNote)
+	{
+		Note = oldNote;
+		CVWrite(voltages[NOTE]);
+		GateWrite(oldGateState, nPressedKeys);
+	}
 }
