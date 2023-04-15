@@ -1,6 +1,12 @@
-//////////////////////	variables for monophono firmware	///////
-#include "monophonoBoardPinHeader.h"
+#ifndef CONFIG_H
+#define CONFIG_H 
 
+
+#define N_ARPEGGIATOR_VOICE 7
+#define N_OCTAVES_MAX 4
+#define debugEnable 0
+
+	
 //bolean vect contains key pressure states
 bool pressedKeys[N_KEYS];		
 
@@ -32,24 +38,22 @@ enum arpeggiatorMode
 	RAND=	3
 };	
 
-enum monoMode
-{
-	HIGH 	= 0,
-	LOW		= 1
-}
-
 arpeggiatorMode arpMode;
 arpeggiatorState arpState;
-monoMode keyMode;
+
 
 short NOTE=0;	//0 -> N_KEYS-1
 int voltages[N_KEYS];
 
-short nPressedKeys = 0;
-bool noteAppend=false;
 
-const short nArpeggiatorVoices = 7;
-const short N_OCTAVES_MAX =4;
-int arpeggiatorNotes[nArpeggiatorVoices * N_OCTAVES_MAX];
+short nPressedKeys = 0;
+
+//flag per indicare se ci sono ancora altre note premute
+bool noteAppend = false;
+
+
+int arpeggiatorNotes[N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX];
 bool arpNoteLatch= false;
 
+
+#endif

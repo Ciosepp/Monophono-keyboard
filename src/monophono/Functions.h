@@ -15,7 +15,7 @@ void Init();
 bool noteDown(int i, bool* noteScan, bool* noteTrans);
 bool noteUp(int i, bool* noteScan, bool* noteTrans);
 void elabControls();
-int mono(int oldNote);
+void mono();
 void logic();
 int arpFilIndex=0;
 void arpeggiatorHold();

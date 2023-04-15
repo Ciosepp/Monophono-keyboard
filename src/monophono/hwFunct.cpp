@@ -1,10 +1,12 @@
 #include "hwFunct.h"
 #include "Functions.h"
 #include "monophonoBoardPinHeader.h"
+#include "config.h"
 #include "Wire.h"
 #include "MCP4725.h"
 MCP4725 dac(0x62); 
 
+#define N 60
 
 void gateOn(){
 	digitalWrite(GATE_PIN,1);
@@ -43,8 +45,8 @@ void setMux(int val,int* Pins){
 	}
 }
 bool scanKey(int i){
-	n= i/N_COLUMNS;
-	m= i%N_ROWS
+	short n= i/N_COLUMNS;
+	short m= i%N_ROWS;
 
 	digitalWrite(W_EN_PIN, n/N_COLUMNS);
 

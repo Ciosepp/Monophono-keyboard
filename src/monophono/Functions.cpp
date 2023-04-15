@@ -1,7 +1,7 @@
 #include "Functions.h"
 #include "hwFunct.h"
 #include "monophonoBoardPinHeader.h"
-
+#include "config.h"
 void Init(){
 	pinInit();
 	dacInit();
@@ -43,12 +43,12 @@ void elabControls(){
 
 */
 
-int mono(int oldNote){
-	int note = oldNote;
+void mono(){
+
 	for(int i = 0; i < N_KEYS; i++){
 
 			//key-change detection (XOR)
-		if(pressedKeys[i] ^^ oldPressedKeys[i]){
+		if(pressedKeys[i] ^ oldPressedKeys[i]){
 
 				//key down
 			if(pressedKeys[i] == PRESSED){
@@ -75,7 +75,7 @@ int mono(int oldNote){
 			//update edge-detection memory
 		oldPressedKeys[i] = pressedKeys[i];
 	}
-	return note;
+
 }
 
 
@@ -84,13 +84,13 @@ void logic(){
 		//switch between MONO, arpeggiator HOLD or LATCH
 	switch(arpState){
 		case OFF:
-		NOTE = mono();
+		mono();
 		break;
 		case HOLD:
-		NOTE = arpeggiatorHold();
+		arpeggiatorHold();
 		break;	
 		case LATCH:
-		NOTE = arpeggiatorLatch();
+		arpeggiatorLatch();
 		break;	
 	}
 
@@ -98,11 +98,11 @@ void logic(){
 
 void arpeggiatorHold()//vector filler
 {
-	int nArpeggiatorNotes = nPressedKeys*(1+ARP_OCTAVE);
+	int nArpeggiatorNotes = nPressedKeys*(1+ARP_OCTAVE_RAW);
 	arpFilIndex = 0;
 	for(int i = 0; i < N_KEYS; i++){
 			//if keys are pressed and arp mem is empty
-		if (pressedKeys[i] == PRESSED && arpFilIndex < nArpeggiatorVoices){
+		if (pressedKeys[i] == PRESSED && arpFilIndex < N_ARPEGGIATOR_VOICE){
 
 			arpeggiatorNotes[arpFilIndex]= i;
 			arpFilIndex++;
@@ -117,7 +117,7 @@ void arpeggiatorHold()//vector filler
 			//for each note of the arpeggiator
 		for(int j=0; j<arpFilIndex; j++){
 				//if octaved note goes out of range
-			if((arpeggiatorNotes[j]+(o*12))>(nArpeggiatorVoices * N_OCTAVES))
+			if((arpeggiatorNotes[j]+(o*12))>(N_ARPEGGIATOR_VOICE * N_OCTAVES))
 				break;
 				//extend pressed notes for octave(s)
 			arpeggiatorNotes[nPressedKeys*o+j]=arpeggiatorNotes[j]+(o*12);
@@ -135,7 +135,7 @@ void arpeggiatorHold()//vector filler
 void arpeggiatorLatch()
 {
 
-	int nArpeggiatorNotes = nPressedKeys*(1+ARP_OCTAVE);
+	int nArpeggiatorNotes = nPressedKeys*(1+ARP_OCTAVE_RAW);
 	if(!isRecording && nPressedKeys >= 1){
 		isRecording = true;
 		arpFilIndex =0;

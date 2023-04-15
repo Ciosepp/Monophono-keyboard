@@ -19,6 +19,8 @@ files:
 #include "hwFunct.h"
 #include "Functions.h"
 #include "monophonoBoardPinHeader.h"
+#include "config.h"
+
 
 void setup(){
     Serial.begin(115200);
