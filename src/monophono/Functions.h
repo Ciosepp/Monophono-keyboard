@@ -17,11 +17,7 @@ bool noteUp(int i, bool* noteScan, bool* noteTrans);
 void elabControls();
 void mono();
 void logic();
-int arpFilIndex=0;
-void arpeggiatorHold();
-bool isRecording = true;
-void arpeggiatorLatch();
-void arpeggiatorTiming();
+
 void readInputs();
 void output();
 #endif

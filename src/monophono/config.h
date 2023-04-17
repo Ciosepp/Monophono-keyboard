@@ -27,15 +27,15 @@ short ARP_OCTAVE_RAW;
 
 enum arpeggiatorState
 {
-	OFF=	0,
-	HOLD =	1,
-	LATCH=	2};
+	OFF,
+	HOLD ,
+	LATCH};
 enum arpeggiatorMode
 {
-	UP=		0,
-	UD=		1,
-	DOWN=	2,
-	RAND=	3
+	UP,
+	UD,
+	DOWN,
+	RAND
 };	
 
 arpeggiatorMode arpMode;

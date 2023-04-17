@@ -16,8 +16,10 @@ files:
 		arpeggiator.ino = 	code for the arpeggiator 
 
 */
+#include <Arduino.h>
 #include "hwFunct.h"
 #include "Functions.h"
+#include "arpeggiator.h"
 #include "monophonoBoardPinHeader.h"
 #include "config.h"
 

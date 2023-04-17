@@ -18,7 +18,7 @@ void scanKeyboard(bool *vect);
 
 void scanControls();
 
-void CVWrite(int Note);
+void CVWrite(int NOTE);
 void GateWrite(bool oldGT, int nK);
 
 #endif

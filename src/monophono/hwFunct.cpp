@@ -77,9 +77,9 @@ void scanControls(){
 }
 
 
-void CVWrite(int Note)
+void CVWrite(int NOTE)
 {
-	dac.writeDAC(Note);
+	dac.writeDAC(NOTE);
 }
 
 void GateWrite(bool oldGT, int nK)
