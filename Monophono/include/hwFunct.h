@@ -1,15 +1,17 @@
-//hwFunct.h
+
 #ifndef HWFUNCT_H
 #define HWFUNCT_H 
 
 #include <Arduino.h>
+
+#define N 61
 
 void gateOn();
 void gateRefresh();
 void gateOff();
 void pinInit();
 void dacInit();
-void setMux(int val,int* Pins);
+void setMux(int val,const short* Pins);
 bool scanKey(int i);
 void scanKeyboard(bool *vect);
 //this function read all the control inputs from  
@@ -20,5 +22,10 @@ void scanControls();
 
 void CVWrite(int NOTE);
 void GateWrite(bool oldGT, int nK);
+
+extern const short WRITE_MUX_ADDRESS_PINS[3];
+
+extern const short READ_MUX_ADDRESS_PINS[3];
+
 
 #endif

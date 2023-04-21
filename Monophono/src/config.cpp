@@ -1,17 +1,9 @@
-#ifndef CONFIG_H
-#define CONFIG_H 
-
-
-#define N_ARPEGGIATOR_VOICE 7
-#define N_OCTAVES_MAX 4
-#define debugEnable 0
-
-	
+#include "config.h"
 //bolean vect contains key pressure states
-bool pressedKeys[N_KEYS];		
+bool KeyStates[N_KEYS];		
 
 //bolean vect contains old key pressure states
-bool oldPressedKeys[N_KEYS];
+bool oldKeyStates[N_KEYS];
 
 bool CK_IN;
 	//BPMs
@@ -25,35 +17,22 @@ short ARP_STATE_RAW;
 	//OCTAVE: 0, +1, +2, +3
 short ARP_OCTAVE_RAW;
 
-enum arpeggiatorState
-{
-	OFF,
-	HOLD ,
-	LATCH};
-enum arpeggiatorMode
-{
-	UP,
-	UD,
-	DOWN,
-	RAND
-};	
+	
 
 arpeggiatorMode arpMode;
 arpeggiatorState arpState;
 
 
-short NOTE=0;	//0 -> N_KEYS-1
-int voltages[N_KEYS];
+short NOTE;	//0 -> N_KEYS-1
+int voltages[61];
 
 
-short nPressedKeys = 0;
+short nKeyStates = 0;
 
 //flag per indicare se ci sono ancora altre note premute
-bool noteAppend = false;
+bool noteAppend ;
 
 
 int arpeggiatorNotes[N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX];
-bool arpNoteLatch= false;
+bool arpNoteLatch;
 
-
-#endif

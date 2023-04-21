@@ -1,12 +1,13 @@
 #include "hwFunct.h"
-#include "Functions.h"
-#include "monophonoBoardPinHeader.h"
+
+#include "pin_config.h"
 #include "config.h"
+
 #include "Wire.h"
 #include "MCP4725.h"
 MCP4725 dac(0x62); 
 
-#define N 60
+
 
 void gateOn(){
 	digitalWrite(GATE_PIN,1);
@@ -33,18 +34,27 @@ void dacInit(){    //funzione che genera le tensioni specifiche per ogni tasto
 	dac.writeDAC(0);
 	
 	for(uint32_t i=0; i<N; i++){
-		voltages[i]= i*4095/60;
-		if(debugEnable)Serial.println(voltages[i]);
+		double x= 4095/60;
+		voltages[i]= i*x;
+		//if(debugEnable)Serial.println(voltages[i]);
 	}  	
 }
-void setMux(int val,int* Pins){
-	uint8_t out =val;
+void setMux(int val,const short* Pins){
+
 	for (int i = 0; i < 3; i++)
 	{
-		digitalWrite(Pins[i],1 & (val>>(2-i)));	
+		digitalWrite(Pins[i],1 & (val>>i));	
 	}
 }
 bool scanKey(int i){
+
+	        //hardware port mapping
+	//write(rows) multiplexer
+    int WRITE_MAP[N_ROWS-1]={3,0,1,2,6,7,4,5};
+	//read(colmns) multiplexer
+    int READ_MAP[N_COLUMNS]={6,4,1,2,0,3};
+
+
 	short n= i/N_COLUMNS;
 	short m= i%N_ROWS;
 
@@ -72,7 +82,7 @@ void scanControls(){
 		//ARPEGIATOR
 	ARP_MODE_RAW = analogRead(ARP_MODE_PIN);
 	ARP_STATE_RAW = analogRead(ARP_ON_PIN);
-	ARP_OCT_RAW = analogRead(ARP_OCT_PIN);
+	ARP_OCTAVE_RAW = analogRead(ARP_OCT_PIN);
 
 }
 
