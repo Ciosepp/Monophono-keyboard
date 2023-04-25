@@ -47,7 +47,7 @@ void setMux(int val,const short* Pins){
 	}
 }
 bool scanKey(int i){
-
+	bool x =0;
 	        //hardware port mapping
 	//write(rows) multiplexer
     int WRITE_MAP[N_ROWS-1]={3,0,1,2,6,7,4,5};
@@ -55,21 +55,27 @@ bool scanKey(int i){
     int READ_MAP[N_COLUMNS]={6,4,1,2,0,3};
 
 
-	short n= i/N_COLUMNS;
-	short m= i%N_ROWS;
+	short w= i/N_COLUMNS;
+	short r= i%N_COLUMNS;
 
-	digitalWrite(W_EN_PIN, n/N_COLUMNS);
+	digitalWrite(W_EN_PIN, w==0);
 
-	setMux(WRITE_MAP[n], WRITE_MUX_ADDRESS_PINS);
-	setMux(READ_MAP[m], READ_MUX_ADDRESS_PINS);
+	setMux(WRITE_MAP[(w-1)%(N_ROWS-1)], WRITE_MUX_ADDRESS_PINS);
+	
+	setMux(READ_MAP[r], READ_MUX_ADDRESS_PINS);
 
-	return digitalRead(R_MUX_OUT_PIN);
+	delayMicroseconds(50);
+	x	=	digitalRead(R_MUX_OUT_PIN);
+	return x;
 }
+
 void scanKeyboard(bool *vect){
 		//scan each key
 	for(int i=0; i< N_KEYS; i++){
 		vect[i] = scanKey(i);
 	}
+	setMux(0, WRITE_MUX_ADDRESS_PINS);
+	setMux(0, READ_MUX_ADDRESS_PINS);
 }
 //this function read all the control inputs from  
 //all potentiometers and GPI

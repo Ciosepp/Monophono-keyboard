@@ -18,5 +18,5 @@ void loop() {
 		Serial.print(KeyStates[i]);
 	}
 	Serial.print("\n");
-	delay(1000);
+	delay(100);
 }
