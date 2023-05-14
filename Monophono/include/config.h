@@ -15,6 +15,10 @@ extern bool KeyStates[N_KEYS];
 //bolean vect contains old key pressure states
 extern bool oldKeyStates[N_KEYS];
 
+//bolean vect contains key pressure changes states
+// KeyChanges <= KeyStates XOR oldKeyStates
+extern bool KeyChanges[N_KEYS];
+
 extern bool CK_IN;
 	//BPMs
 extern short CK_AMT;
@@ -47,11 +51,7 @@ extern short NOTE;	//0 -> N_KEYS-1
 extern int voltages[61];
 
 
-extern short nKeyStates ;
-
-//flag per indicare se ci sono ancora altre note premute
-extern bool noteAppend ;
-
+extern short nPressedKeys;
 
 extern int arpeggiatorNotes[N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX];
 extern bool arpNoteLatch;

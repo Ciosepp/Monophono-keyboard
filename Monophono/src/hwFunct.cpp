@@ -5,9 +5,22 @@
 
 #include "Wire.h"
 #include "MCP4725.h"
-MCP4725 dac(0x62); 
+MCP4725 dac(0x60); 
 
+#include "Timer.h"
+Timer BPM32;
 
+void clockSet(short BPM, short division){
+	unsigned long t = (60000/BPM)/division;
+	BPM32.setClock(t, 50);
+}
+bool CLOCK(){
+	return BPM32.getClock();
+}
+
+void writeClock(bool x){
+	digialWrite(CLOCK_OUT_PIN,x);
+}
 
 void gateOn(){
 	digitalWrite(GATE_PIN,1);
@@ -64,17 +77,19 @@ bool scanKey(int i){
 	
 	setMux(READ_MAP[r], READ_MUX_ADDRESS_PINS);
 
-	delayMicroseconds(50);
+	//delayMicroseconds(50);
 	x	=	digitalRead(R_MUX_OUT_PIN);
 	return x;
 }
 
-void scanKeyboard(bool *vect){
+void scanKeyboard(){
 		//scan each key
 	for(int i=0; i< N_KEYS; i++){
-		vect[i] = scanKey(i);
+		KeyStates[i] = scanKey(i);	//salva nuovo valore
+		KeyChanges[i] = KeyStates[i] ^oldKeyStates[i];// calcola cambiamento
+		oldKeyStates[i] = KeyStates[i];//aggiorna memoria
 	}
-	setMux(0, WRITE_MUX_ADDRESS_PINS);
+	setMux(0, WRITE_MUX_ADDRESS_PINS);//non sicuro sia necessario
 	setMux(0, READ_MUX_ADDRESS_PINS);
 }
 //this function read all the control inputs from  
@@ -89,23 +104,21 @@ void scanControls(){
 	ARP_MODE_RAW = analogRead(ARP_MODE_PIN);
 	ARP_STATE_RAW = analogRead(ARP_ON_PIN);
 	ARP_OCTAVE_RAW = analogRead(ARP_OCT_PIN);
-
 }
 
 
-void CVWrite(int NOTE)
+void CVWrite(int ADC_VAL)
 {
-	dac.writeDAC(NOTE);
+	dac.writeDAC(ADC_VAL);
 }
 
-void GateWrite(bool oldGT, int nK)
+void GateWrite(bool isFirst, int nK)
 {
 
 	if(nK >0)
 	{
-		if(oldGT == false) gateOn();
+		if(isFirst == true) gateOn();
 		else gateRefresh();
 	} 
 	else gateOff();
-
 }
