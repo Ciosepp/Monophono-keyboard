@@ -19,5 +19,5 @@ void mono();
 void logic();
 
 void readInputs();
-void output();
+
 #endif
