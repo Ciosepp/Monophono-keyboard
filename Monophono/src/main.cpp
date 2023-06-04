@@ -20,7 +20,8 @@ bool flag=false;
 
 void loop() {
 	digitalWrite(GATE_PIN,CLOCK() );
-	scanControls();
+
+	readInputs()
 	ckOutput();
 	if(!flag && CLOCK())
 	{
