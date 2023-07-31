@@ -19,7 +19,7 @@ bool CLOCK(){
 }
 
 void writeClock(bool x){
-	digialWrite(CLOCK_OUT_PIN,x);
+	digitalWrite(CLOCK_OUT_PIN,x);
 }
 
 void gateOn(){
