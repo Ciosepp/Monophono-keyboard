@@ -7,7 +7,7 @@ bool oldKeyStates[N_KEYS];
 
 //bolean vect contains key pressure changes states
 // KeyChanges <= KeyStates XOR oldKeyStates
-extern bool KeyChanges[N_KEYS];
+bool KeyChanges[N_KEYS];
 
 bool CK_IN;
 	//BPMs

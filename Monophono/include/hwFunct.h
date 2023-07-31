@@ -28,9 +28,9 @@ void scanControls();
 void CVWrite(int NOTE);
 void GateWrite(bool oldGT, int nK);
 
-extern const short WRITE_MUX_ADDRESS_PINS[3];
+//extern const short WRITE_MUX_ADDRESS_PINS[3];
 
-extern const short READ_MUX_ADDRESS_PINS[3];
+//extern const short READ_MUX_ADDRESS_PINS[3];
 
 
 #endif

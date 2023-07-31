@@ -34,7 +34,9 @@ enum arpeggiatorState
 {
 	OFF,
 	HOLD ,
-	LATCH};
+	LATCH
+};
+
 enum arpeggiatorMode
 {
 	UP,
@@ -49,7 +51,6 @@ extern arpeggiatorState arpState;
 
 extern short NOTE;	//0 -> N_KEYS-1
 extern int voltages[61];
-
 
 extern short nPressedKeys;
 

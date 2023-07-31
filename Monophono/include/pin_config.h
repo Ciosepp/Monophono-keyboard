@@ -78,13 +78,17 @@ const short N_COLUMNS = 6;
 
 #endif
 
-const short WRITE_MUX_ADDRESS_PINS[3] = {W_MUX_A_PIN,
-						W_MUX_B_PIN,
-						W_MUX_C_PIN};
+const short WRITE_MUX_ADDRESS_PINS[3] = {
+    W_MUX_A_PIN,
+    W_MUX_B_PIN,
+    W_MUX_C_PIN
+};
 
-const short READ_MUX_ADDRESS_PINS[3] = {R_MUX_A_PIN,
-						R_MUX_B_PIN,
-						R_MUX_C_PIN};
+const short READ_MUX_ADDRESS_PINS[3] = {
+    R_MUX_A_PIN,
+	R_MUX_B_PIN,
+	R_MUX_C_PIN
+};
 
 
 #define PRESSED true

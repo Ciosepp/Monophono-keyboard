@@ -19,15 +19,51 @@ bool noteUp(int i, bool* noteScan, bool* noteTrans){
 
 void elabControls(){
 
-	ARP_MODE_RAW = 	map(ARP_MODE_RAW,0,1023,0,3);
-	arpMode = ARP_MODE_RAW;
+	ARP_MODE_RAW = map(ARP_MODE_RAW,0,1023,0,3);
 
-	ARP_STATE_RAW =	map(ARP_STATE_RAW,0,1023,0,2);
-	arpState = ARP_STATE_RAW;
+	switch (ARP_MODE_RAW){
+		case 0:
+			arpMode = UP;
+			break;
+		
+		case 1:
+			arpMode = UD;
+			break;
 
-	ARP_OCTAVE_RAW= map(ARP_OCTAVE_RAW,0,1023,0,3);
+		case 2:
+			arpMode = DOWN;
+			break;
 
-	CK_AMT =		map(CK_AMT,0, 1023,60,300);
+		case 3:
+			arpMode = RAND;
+			break;
+
+		default:
+			break;
+	}
+
+	ARP_STATE_RAW =	map(ARP_STATE_RAW, 0, 1023, 0, 2);
+
+	switch (ARP_STATE_RAW){
+		case 0:
+			arpState = OFF;
+			break;
+		
+		case 1:
+			arpState = HOLD;
+			break;
+
+		case 2:
+			arpState = LATCH;
+			break;
+
+		default:
+			break;
+	}
+
+	ARP_OCTAVE_RAW = map(ARP_OCTAVE_RAW, 0, 1023, 0, 3);
+
+	CK_AMT = map(CK_AMT, 0, 1023, 60, 300);
 
 }
 
@@ -55,6 +91,6 @@ void logic(){
 
 void readInputs()
 {
-	scanKeyboard(pressedKeys);
+	scanKeyboard();
 	scanControls();
 }

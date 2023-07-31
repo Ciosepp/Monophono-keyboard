@@ -19,37 +19,37 @@ bool CLOCK(){
 }
 
 void writeClock(bool x){
-	digitalWrite(CLOCK_OUT_PIN,x);
+	digitalWrite(CLOCK_OUT_PIN, x);
 }
 
 void gateOn(){
-	digitalWrite(GATE_PIN,1);
+	digitalWrite(GATE_PIN, 1);
 }
 void gateRefresh(){
-	digitalWrite(GATE_PIN,0);
-	digitalWrite(GATE_PIN,1);
+	digitalWrite(GATE_PIN, 0);
+	digitalWrite(GATE_PIN, 1);
 }
 void gateOff(){
-	digitalWrite(GATE_PIN,0);
+	digitalWrite(GATE_PIN, 0);
 }
 void pinInit(){
 	for(int i=0; i<3; i++){
-		pinMode(READ_MUX_ADDRESS_PINS[i],OUTPUT);
-		pinMode(WRITE_MUX_ADDRESS_PINS[i],OUTPUT);
+		pinMode(READ_MUX_ADDRESS_PINS[i], OUTPUT);
+		pinMode(WRITE_MUX_ADDRESS_PINS[i], OUTPUT);
 	}
-	pinMode(W_EN_PIN,OUTPUT);
-	pinMode(R_MUX_OUT_PIN,INPUT);
-	pinMode(GATE_PIN,OUTPUT);
+	pinMode(W_EN_PIN, OUTPUT);
+	pinMode(R_MUX_OUT_PIN, INPUT);
+	pinMode(GATE_PIN, OUTPUT);
 }
 
 void dacInit(){    //funzione che genera le tensioni specifiche per ogni tasto
-	
+	dac.begin();
 	dac.writeDAC(0);
 	
 	for(uint32_t i=0; i<N; i++){
-		double x= 4095/60;
+		double x= 4095.0/60.0;
 		voltages[i]= i*x;
-		//if(debugEnable)Serial.println(voltages[i]);
+		Serial.println(voltages[i]);
 	}  	
 }
 void setMux(int val,const short* Pins){

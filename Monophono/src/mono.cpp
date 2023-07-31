@@ -14,7 +14,7 @@ bool noteAppend = false;
 void mono(){
     for (short i = 0; i < N_KEYS; i++)
     {
-        if (KeyChanges[i] )//detect
+        if (KeyChanges[i] )//detect 
         {
             if(KeyStates[i])//key-down
             {
