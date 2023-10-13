@@ -40,10 +40,11 @@ void pinInit(){
 	}
 	pinMode(W_EN_PIN, OUTPUT);
 	pinMode(R_MUX_OUT_PIN, INPUT);
+	
 	pinMode(GATE_PIN, OUTPUT);
 
 	pinMode(CLOCK_OUT_PIN, OUTPUT);
-	pinMode(ARPEGGIATOR_CLOCK_IN_, INPUT);
+	pinMode(CK_IN_PIN, INPUT);
 }
 
 void dacInit(){    //funzione che genera le tensioni specifiche per ogni tasto

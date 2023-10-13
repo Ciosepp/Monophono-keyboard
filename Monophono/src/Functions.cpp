@@ -1,6 +1,6 @@
 #include "Functions.h"
 #include "hwFunct.h"
-#include "monophonoBoardPinHeader.h"
+#include "pin_config.h"
 #include "config.h"
 
 #include "mono.h"

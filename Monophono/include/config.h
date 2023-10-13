@@ -4,7 +4,9 @@
 
 
 #define N_ARPEGGIATOR_VOICE 7
+
 #define N_OCTAVES_MAX 4
+
 #define debugEnable 0
 
 #define N_KEYS 49

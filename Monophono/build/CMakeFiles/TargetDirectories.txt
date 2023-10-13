@@ -1,0 +1,7 @@
+C:/Users/ciosepp/Documents/Monophono-keyboard/Monophono/build/CMakeFiles/unity.dir
+C:/Users/ciosepp/Documents/Monophono-keyboard/Monophono/build/CMakeFiles/edit_cache.dir
+C:/Users/ciosepp/Documents/Monophono-keyboard/Monophono/build/CMakeFiles/rebuild_cache.dir
+C:/Users/ciosepp/Documents/Monophono-keyboard/Monophono/build/CMakeFiles/list_install_components.dir
+C:/Users/ciosepp/Documents/Monophono-keyboard/Monophono/build/CMakeFiles/install.dir
+C:/Users/ciosepp/Documents/Monophono-keyboard/Monophono/build/CMakeFiles/install/local.dir
+C:/Users/ciosepp/Documents/Monophono-keyboard/Monophono/build/CMakeFiles/install/strip.dir

@@ -20,7 +20,6 @@ short ARP_MODE_RAW;
 short ARP_STATE_RAW;
 	//OCTAVE: 0, +1, +2, +3
 short ARP_OCTAVE_RAW;
-
 	
 
 arpeggiatorMode arpMode;

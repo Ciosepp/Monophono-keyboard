@@ -4,7 +4,6 @@
 bool BUSY = false;
 short nNOTES=0;
 
-short arpeggiatorNotes[N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX];
 bool arpNoteLatch;
 
 bool arpLatch = false;
