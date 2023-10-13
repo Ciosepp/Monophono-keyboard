@@ -30,9 +30,4 @@ arpeggiatorState arpState;
 short NOTE;	//0 -> N_KEYS-1
 int voltages[61];
 
-
 short nPressedKeys = 0;
-
-int arpeggiatorNotes[N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX];
-bool arpNoteLatch;
-

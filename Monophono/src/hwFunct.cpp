@@ -32,6 +32,7 @@ void gateRefresh(){
 void gateOff(){
 	digitalWrite(GATE_PIN, 0);
 }
+
 void pinInit(){
 	for(int i=0; i<3; i++){
 		pinMode(READ_MUX_ADDRESS_PINS[i], OUTPUT);
@@ -40,6 +41,9 @@ void pinInit(){
 	pinMode(W_EN_PIN, OUTPUT);
 	pinMode(R_MUX_OUT_PIN, INPUT);
 	pinMode(GATE_PIN, OUTPUT);
+
+	pinMode(CLOCK_OUT_PIN, OUTPUT);
+	pinMode(ARPEGGIATOR_CLOCK_IN_, INPUT);
 }
 
 void dacInit(){    //funzione che genera le tensioni specifiche per ogni tasto

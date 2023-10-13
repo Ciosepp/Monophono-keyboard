@@ -24,6 +24,7 @@ int main()
     cout<<endl<<endl;
     cout<<"Insert #octaves:"<<endl;
     cin>>octaves;
+
     for(int o=1; o<octaves+1; o++){
         for(int i=0; i<n; i++){
             if((NOTES[i]+o*12)>nKeys)
