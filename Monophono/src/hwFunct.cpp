@@ -87,20 +87,20 @@ bool scanKey(int i){
 	return x;
 }
 
-void scanKeyboard(){
+void scanKeyboard() {
 		//scan each key
-	for(int i=0; i< N_KEYS; i++){
+	for (int i = 0; i < N_KEYS; i++) {
 		KeyStates[i] = scanKey(i);	//salva nuovo valore
-		KeyChanges[i] = KeyStates[i] ^oldKeyStates[i];// calcola cambiamento
-		oldKeyStates[i] = KeyStates[i];//aggiorna memoria
+		KeyChanges[i] = KeyStates[i] ^ oldKeyStates[i]; // calcola cambiamento
+		oldKeyStates[i] = KeyStates[i]; //aggiorna memoria
 	}
-	setMux(0, WRITE_MUX_ADDRESS_PINS);//non sicuro sia necessario
+	setMux(0, WRITE_MUX_ADDRESS_PINS); //non sicuro sia necessario
 	setMux(0, READ_MUX_ADDRESS_PINS);
 }
 //this function read all the control inputs from  
 //all potentiometers and GPI
 
-void scanControls(){
+void scanControls() {
 		//INPUT CLOCK
 	CK_IN = digitalRead(CK_IN_PIN);
 		//CK SPEED

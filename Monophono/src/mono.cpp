@@ -14,9 +14,9 @@ bool noteAppend = false;
 void mono(){
     for (short i = 0; i < N_KEYS; i++)
     {
-        if (KeyChanges[i] )//detect 
+        if (KeyChanges[i] ) //detect 
         {
-            if(KeyStates[i])//key-down
+            if(KeyStates[i]) //key-down
             {
                 nPressedKeys++;
                 NOTE = i;
@@ -24,10 +24,10 @@ void mono(){
             else            //key-up
             {
                 nPressedKeys--;
-                if(nPressedKeys != 0){//if at least one more key pressed
-                    if( i== NOTE)   //the last pessed key is released
+                if(nPressedKeys != 0){//if at least one key pressed
+                    if(i == NOTE)   //the last pessed key is released
                     {
-                        noteAppend =true;//find new note among already pressed
+                        noteAppend = true;//find new note among already pressed
                     }
                 }
             }
