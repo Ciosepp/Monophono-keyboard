@@ -1,7 +1,7 @@
-
 #ifndef CONFIG_H
 #define CONFIG_H 
 
+#include <stdint.h>
 
 #define N_ARPEGGIATOR_VOICE 7
 
@@ -12,18 +12,22 @@
 #define N_KEYS 49
 
 #define PRESSED true
+#define RELEASED false
+
+#define MAX_ARP_SEQUENCE_LENGTH (N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX)
 	
 //bolean vect contains key pressure states
 extern bool KeyStates[N_KEYS];		
-
-//bolean vect contains old key pressure states
-extern bool oldKeyStates[N_KEYS];
+extern short nPressedKeys;
 
 //bolean vect contains key pressure changes states
 // KeyChanges <= KeyStates XOR oldKeyStates
 extern bool KeyChanges[N_KEYS];
+extern short nChangedKeys;
 
-extern bool CK_IN;
+extern bool oldClockRaw;
+extern bool clockRaw;
+extern bool isRisingEdge;
 	//BPMs
 extern short CK_AMT;
 
@@ -55,8 +59,6 @@ extern arpeggiatorState arpState;
 
 extern short NOTE;	//0 -> N_KEYS-1
 extern int voltages[61];
-
-extern short nPressedKeys;
 
 extern int arpeggiatorNotes[N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX];
 extern bool arpNoteLatch;

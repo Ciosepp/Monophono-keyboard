@@ -1,15 +1,18 @@
 #include "config.h"
+#include "cppQueue.h"
+
 //bolean vect contains key pressure states
 bool KeyStates[N_KEYS];		
-
-//bolean vect contains old key pressure states
-bool oldKeyStates[N_KEYS];
+short nPressedKeys = 0;
 
 //bolean vect contains key pressure changes states
 // KeyChanges <= KeyStates XOR oldKeyStates
 bool KeyChanges[N_KEYS];
+short nChangedKeys;
 
-bool CK_IN;
+bool oldClockRaw;
+bool clockRaw;
+bool isRisingEdge;
 	//BPMs
 short CK_AMT;
 
@@ -20,7 +23,7 @@ short ARP_MODE_RAW;
 short ARP_STATE_RAW;
 	//OCTAVE: 0, +1, +2, +3
 short ARP_OCTAVE_RAW;
-	
+cppQueue arpeggiatorNotes(sizeof(byte), MAX_ARP_SEQUENCE_LENGTH);	
 
 arpeggiatorMode arpMode;
 arpeggiatorState arpState;
@@ -29,4 +32,3 @@ arpeggiatorState arpState;
 short NOTE;	//0 -> N_KEYS-1
 int voltages[61];
 
-short nPressedKeys = 0;
