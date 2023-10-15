@@ -10,6 +10,8 @@
 #define debugEnable 0
 
 #define N_KEYS 49
+
+#define PRESSED true
 	
 //bolean vect contains key pressure states
 extern bool KeyStates[N_KEYS];		
