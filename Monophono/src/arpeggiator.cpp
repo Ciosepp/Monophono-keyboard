@@ -50,3 +50,7 @@ void arpeggiatorHold() {
     }
     
 }
+
+void arpeggiator(){
+    
+}

@@ -18,12 +18,12 @@ void mono(){
         {
             if(KeyStates[i]) //key-down
             {
-                nPressedKeys++;
+                //nPressedKeys++;//handled by keyboard scan funct
                 NOTE = i;
             }
             else            //key-up
             {
-                nPressedKeys--;
+                //nPressedKeys--;//handled by keyboard scan funct
                 if(nPressedKeys != 0){//if at least one key pressed
                     if(i == NOTE)   //the last pessed key is released
                     {

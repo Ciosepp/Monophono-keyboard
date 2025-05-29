@@ -86,11 +86,18 @@ bool scanKey(int i) {
 }
 
 void scanKeyboard() {
+    nPressedKeys=0;
     for (int i = 0; i < N_KEYS; i++) {
         bool oldKeyState = KeyStates[i];
         KeyStates[i] = scanKey(i);
+        //store pressed keys into pressedNotes
+        if(KeyStates[i]== 1 ){
+             pressedNotes[nPressedKeys] = i;
+             nPressedKeys++;
+        }
+
         KeyChanges[i] = oldKeyState ^ KeyStates[i];
-        nPressedKeys += (int)KeyStates[i];
+    
         nChangedKeys += (int)KeyChanges[i];
     }
     setMux(0, WRITE_MUX_ADDRESS_PINS);  // non sicuro sia necessario

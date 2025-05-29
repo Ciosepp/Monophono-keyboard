@@ -20,6 +20,9 @@
 extern bool KeyStates[N_KEYS];		
 extern short nPressedKeys;
 
+//contains all the pressed notes
+extern int8_t pressedNotes[N_KEYS];
+
 //bolean vect contains key pressure changes states
 // KeyChanges <= KeyStates XOR oldKeyStates
 extern bool KeyChanges[N_KEYS];
@@ -55,6 +58,8 @@ enum arpeggiatorMode
 
 extern arpeggiatorMode arpMode;
 extern arpeggiatorState arpState;
+
+extern bool arpNotes[N_ARPEGGIATOR_VOICE *N_OCTAVES_MAX];
 
 
 extern short NOTE;	//0 -> N_KEYS-1
