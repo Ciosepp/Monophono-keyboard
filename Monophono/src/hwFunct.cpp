@@ -92,8 +92,8 @@ void scanKeyboard() {
         KeyStates[i] = scanKey(i);
         //store pressed keys into pressedNotes
         if(KeyStates[i]== 1 ){
-             pressedNotes[nPressedKeys] = i;
-             nPressedKeys++;
+            pressedNotes[nPressedKeys] = i;
+            nPressedKeys++;
         }
 
         KeyChanges[i] = oldKeyState ^ KeyStates[i];

@@ -1,7 +1,7 @@
 #include "arpeggiator.h"
 
 #include "config.h"
-#include "cppQueue.h"
+//#include "cppQueue.h"
 #include "hwFunct.h"
 
 bool BUSY = false;
@@ -16,26 +16,96 @@ enum ArpeggiatorStates {
     PLAYING,
 };
 
-// this function scans the keyboard and fills the arp. buffer
-// it also returns true if at least one key is pressed, false else.
-bool arpRegisterNote() {
-    scanKeyboard();
-    nPressedKeys = 0;
+uint8_t arpSavedNotes[N_ARPEGGIATOR_VOICE];
+uint8_t nArpNotes=0;
 
-    for (short i = 0; i < N_KEYS; i++) {
-        if (nPressedKeys >= N_ARPEGGIATOR_VOICE) {
-            break;  // out if buffer full
-        }
+void arpSampler(){
+	for (int i = 0; i < N_ARPEGGIATOR_VOICE; i++)
+	{
+		arpeggiatorNotes[i]  = pressedNotes[i];
+		nArpNotes = (nArpNotes>N_ARPEGGIATOR_VOICE) ?N_ARPEGGIATOR_VOICE: nPressedKeys;
+	}	
+}
 
-        if (KeyStates[i] == PRESSED) {
-            arpeggiatorNotes[nPressedKeys] = i;  // save note
-            nPressedKeys++;                      // new note
+//fills the arp. buffer up to the maximun arp. notes 
+void arpElabNote() {
+    
+    if (nArpNotes > 0)
+    {
+        
+        //extend notes to max octaves playable 
+        for (uint8_t i = 1; i < N_OCTAVES_MAX; i++)
+        {
+            for (uint8_t j = 0; j < nArpNotes; j++)
+            {
+                arpeggiatorNotes[j+(i*nArpNotes)] = arpeggiatorNotes[j]+(i*12);
+
+				if(arpeggiatorNotes[j]+(i*12) > 60){ //constraining to octave limit 
+					arpeggiatorNotes[j+(i*nArpNotes)] = arpeggiatorNotes[j]+((i-1)*12);
+				} 
+            }   
         }
     }
-    if (nPressedKeys > 0) {
-        return true;
-    }
-    return false;
+}
+//index of the note currently being played fromthe arpeggiator
+int8_t currentArpNoteIndex = 0; 
+//calculates the index after each clock 
+// mode: 0-up, 1-down, 2-UD
+//octExt: 0, 1=+1, 2=+2
+bool IS_FIRST_NOTE =true;
+bool isUPverse=true;
+
+uint8_t arpPlayer(bool EN, int mode, int octExt, int nPKeys){
+	int limit = nPKeys*(octExt+1);
+
+	if (!EN){
+		if(!IS_FIRST_NOTE) IS_FIRST_NOTE =true;
+		if(!isUPverse)isUPverse=true;
+	} 
+
+
+	if (EN && isRisingEdge)
+	{
+		switch (mode)
+		{
+			case 0://UP
+				if(!IS_FIRST_NOTE){
+					currentArpNoteIndex = (currentArpNoteIndex +1)%limit;       
+				}
+			break;
+			
+			case 1://DOWN
+			currentArpNoteIndex = (currentArpNoteIndex -1)%limit;
+			break;
+			
+			case 2://UP-DOWN
+			if (isUPverse==true && !IS_FIRST_NOTE)
+			{
+				currentArpNoteIndex ++;
+				if (currentArpNoteIndex>=limit)
+				{
+					isUPverse=false;
+					break;
+				}
+			}
+			if (isUPverse==false)
+			{
+				currentArpNoteIndex --;
+				if (currentArpNoteIndex<=0)
+				{
+					isUPverse=true;
+					break;
+				}
+			}
+			
+			break;
+			default:
+			break;
+		}
+		IS_FIRST_NOTE = false;
+		isRisingEdge = false;
+	}
+	return currentArpNoteIndex;
 }
 
 void arpeggiatorHold() {
@@ -51,6 +121,6 @@ void arpeggiatorHold() {
     
 }
 
-void arpeggiator(){
+void arpeggiatorLatch(){
     
 }

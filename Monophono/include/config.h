@@ -5,7 +5,7 @@
 
 #define N_ARPEGGIATOR_VOICE 7
 
-#define N_OCTAVES_MAX 4
+#define N_OCTAVES_MAX 3
 
 #define debugEnable 0
 
@@ -59,13 +59,13 @@ enum arpeggiatorMode
 extern arpeggiatorMode arpMode;
 extern arpeggiatorState arpState;
 
-extern bool arpNotes[N_ARPEGGIATOR_VOICE *N_OCTAVES_MAX];
+extern bool arpNotes[MAX_ARP_SEQUENCE_LENGTH];
 
 
 extern short NOTE;	//0 -> N_KEYS-1
 extern int voltages[61];
 
-extern int arpeggiatorNotes[N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX];
+extern int arpeggiatorNotes[MAX_ARP_SEQUENCE_LENGTH];
 extern bool arpNoteLatch;
 
 

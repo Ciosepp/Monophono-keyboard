@@ -4,6 +4,7 @@
 #include "hwFunct.h"
 #include "mono.h"
 #include "pin_config.h"
+#include "arpeggiator.h"
 
 void Init() {
     pinInit();
@@ -68,7 +69,7 @@ void elabControls() {
 void logic() {
     elabControls();
     // switch between MONO, arpeggiator HOLD or LATCH
-    /* switch(arpState){
+    switch(arpState){
         case OFF:
         mono();
         break;
@@ -78,7 +79,7 @@ void logic() {
         case LATCH:
         arpeggiatorLatch();
         break;
-    } */
+    } 
 
     // dev
     mono();

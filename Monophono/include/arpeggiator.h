@@ -3,5 +3,11 @@
 
 #include <Arduino.h>
 
-void arpeggiator();
+
+void arpSampler();
+
+void arpElabNote();
+
+uint8_t arpPlayer(bool EN, int mode, int octExt, int nPKeys);
+
 #endif
