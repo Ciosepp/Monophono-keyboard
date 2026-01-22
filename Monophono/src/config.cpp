@@ -6,6 +6,8 @@ bool KeyStates[N_KEYS];
 int8_t pressedNotes[N_KEYS];
 short nPressedKeys = 0;
 
+bool KEYDOWN;
+
 //bolean vect contains key pressure changes states
 // KeyChanges <= KeyStates XOR oldKeyStates
 bool KeyChanges[N_KEYS];
@@ -24,9 +26,12 @@ short ARP_MODE_RAW;
 short ARP_STATE_RAW;
 	//OCTAVE: 0, +1, +2, +3
 short ARP_OCTAVE_RAW;
+uint8_t ARP_OCTAVE;
 //cppQueue arpeggiatorNotes(sizeof(byte), MAX_ARP_SEQUENCE_LENGTH);	
 
 bool arpNotes[N_ARPEGGIATOR_VOICE *N_OCTAVES_MAX];
+
+int arpeggiatorNotes[MAX_ARP_SEQUENCE_LENGTH];
 
 arpeggiatorMode arpMode;
 arpeggiatorState arpState;
@@ -34,4 +39,6 @@ arpeggiatorState arpState;
 
 short NOTE;	//0 -> N_KEYS-1
 int voltages[61];
+
+
 

@@ -20,6 +20,9 @@
 extern bool KeyStates[N_KEYS];		
 extern short nPressedKeys;
 
+//true if a key is pressed
+extern bool KEYDOWN;
+
 //contains all the pressed notes
 extern int8_t pressedNotes[N_KEYS];
 
@@ -41,6 +44,7 @@ extern short ARP_MODE_RAW;
 extern short ARP_STATE_RAW;
 	//OCTAVE: 0, +1, +2, +3
 extern short ARP_OCTAVE_RAW;
+extern uint8_t ARP_OCTAVE;
 enum arpeggiatorState
 {
 	OFF,

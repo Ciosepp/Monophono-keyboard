@@ -55,8 +55,8 @@ int8_t currentArpNoteIndex = 0;
 bool IS_FIRST_NOTE =true;
 bool isUPverse=true;
 
-uint8_t arpPlayer(bool EN, int mode, int octExt, int nPKeys){
-	int limit = nPKeys*(octExt+1);
+uint8_t arpPlayer(bool EN, uint8_t mode, uint8_t octExt){
+	int limit = nArpNotes*(octExt+1);
 
 	if (!EN){
 		if(!IS_FIRST_NOTE) IS_FIRST_NOTE =true;
@@ -109,16 +109,10 @@ uint8_t arpPlayer(bool EN, int mode, int octExt, int nPKeys){
 }
 
 void arpeggiatorHold() {
-    if (nPressedKeys == 0) {
-        // TODO: clear the queue and stop playing
-        // arpeggiatorClear();
-        return;
-    }
-    if (!isRisingEdge) {
-        // awaiting the beat signal
-        return;
-    }
-    
+	arpSampler(); //countinuos sampling
+	arpElabNote();//process arp notes
+	NOTE = arpPlayer(nArpNotes >0 , ARP_MODE_RAW, ARP_OCTAVE);
+
 }
 
 void arpeggiatorLatch(){

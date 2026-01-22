@@ -61,7 +61,7 @@ void elabControls() {
             break;
     }
 
-    ARP_OCTAVE_RAW = map(ARP_OCTAVE_RAW, 0, 1023, 0, 3);
+    ARP_OCTAVE = map(ARP_OCTAVE_RAW, 0, 1023, 0, 2);
 
     CK_AMT = map(CK_AMT, 0, 1023, 60, 300);
 }
@@ -71,13 +71,13 @@ void logic() {
     // switch between MONO, arpeggiator HOLD or LATCH
     switch(arpState){
         case OFF:
-        mono();
+            mono();
         break;
         case HOLD:
-        arpeggiatorHold();
+            arpeggiatorHold();
         break;
         case LATCH:
-        arpeggiatorLatch();
+            arpeggiatorLatch();
         break;
     } 
 
