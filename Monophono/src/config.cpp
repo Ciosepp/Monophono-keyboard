@@ -7,6 +7,7 @@ int8_t pressedNotes[N_KEYS];
 short nPressedKeys = 0;
 
 bool KEYDOWN;
+bool KEYEVENT;
 
 //bolean vect contains key pressure changes states
 // KeyChanges <= KeyStates XOR oldKeyStates

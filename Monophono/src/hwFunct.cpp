@@ -88,6 +88,7 @@ bool scanKey(int i) {
 void scanKeyboard() {
     nPressedKeys=0;
     KEYDOWN = false;
+    nChangedKeys =0;
 
     for (int i = 0; i < N_KEYS; i++) {
         bool oldKeyState = KeyStates[i];
@@ -99,7 +100,11 @@ void scanKeyboard() {
         }
 
         KeyChanges[i] = oldKeyState ^ KeyStates[i];
-        KEYDOWN = KeyChanges[i] && KeyStates[i];
+
+        if (KeyChanges[i] ){
+            KEYEVENT = true;
+            if(KeyStates[i]) KEYDOWN = true;
+        } 
         
         nChangedKeys += (int)KeyChanges[i];
     }

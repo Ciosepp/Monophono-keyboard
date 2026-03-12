@@ -19,11 +19,14 @@ enum ArpeggiatorStates {
 uint8_t arpSavedNotes[N_ARPEGGIATOR_VOICE];
 uint8_t nArpNotes=0;
 
-void arpSampler(){
-	for (int i = 0; i < N_ARPEGGIATOR_VOICE; i++)
+void arpSampler(){`
+	nArpNotes = nPressedKeys;
+	if (nArpNotes > N_ARPEGGIATOR_VOICE) nArpNotes = N_ARPEGGIATOR_VOICE;
+
+	for (int i = 0; i < nArpNotes; i++)
 	{
 		arpeggiatorNotes[i]  = pressedNotes[i];
-		nArpNotes = (nArpNotes>N_ARPEGGIATOR_VOICE) ?N_ARPEGGIATOR_VOICE: nPressedKeys;
+		//nArpNotes = (nArpNotes>N_ARPEGGIATOR_VOICE) ?N_ARPEGGIATOR_VOICE: nPressedKeys;
 	}	
 }
 

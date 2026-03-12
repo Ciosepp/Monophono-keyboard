@@ -23,6 +23,9 @@ extern short nPressedKeys;
 //true if a key is pressed
 extern bool KEYDOWN;
 
+//true if a key event (press or release) is detected
+extern bool KEYEVENT;
+
 //contains all the pressed notes
 extern int8_t pressedNotes[N_KEYS];
 
