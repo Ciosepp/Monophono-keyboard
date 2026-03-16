@@ -19,6 +19,7 @@ void mono(){
             if(KeyStates[i]) //key-down
             {
                 //nPressedKeys++;//handled by keyboard scan funct
+                OLD_NOTE = NOTE;
                 NOTE = i;
             }
             else            //key-up
@@ -36,9 +37,23 @@ void mono(){
         {
             if(KeyStates[i])
             {
+                OLD_NOTE = NOTE;
                 NOTE = i;
                 noteAppend = false;
             }
         }  
     }
+   
+}
+
+void MONO_GATE(){
+    if (nPressedKeys > 0) {
+		GATE = 1;
+	}
+	if(OLD_NOTE != NOTE){
+		GATE = 2;
+	}
+	if(nPressedKeys == 0){
+		GATE = 0;
+	}
 }

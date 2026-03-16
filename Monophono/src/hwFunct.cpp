@@ -31,6 +31,9 @@ void gateRefresh() {
 void gateOff() {
     digitalWrite(GATE_PIN, 0);
 }
+void gateCLOCK(){
+    digitalWrite(GATE_PIN,clockRaw);
+}
 
 void pinInit() {
     for (int i = 0; i < 3; i++) {
@@ -136,9 +139,9 @@ void CVWrite(int ADC_VAL) {
     dac.writeDAC(ADC_VAL);
 }
 
-void GateWrite(bool isFirst, int nK) {
+void GateWrite( int nK) {
     if (nK > 0) {
-        if (isFirst == true)
+        if (isFirstArpegio == true)
             gateOn();
         else
             gateRefresh();

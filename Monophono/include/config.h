@@ -70,10 +70,15 @@ extern bool arpNotes[MAX_ARP_SEQUENCE_LENGTH];
 
 
 extern short NOTE;	//0 -> N_KEYS-1
+extern short OLD_NOTE;	//0 -> N_KEYS-1
 extern int voltages[61];
+
+extern uint8_t GATE;
+extern bool GATE_STACCATO;
 
 extern int arpeggiatorNotes[MAX_ARP_SEQUENCE_LENGTH];
 extern bool arpNoteLatch;
+extern bool isFirstArpegio;
 
 
 #endif

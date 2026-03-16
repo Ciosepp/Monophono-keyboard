@@ -4,7 +4,11 @@
 
 void updateCV(int note,int *volt);
 
-void CV_GATE_CTRL();
+void GATE_WRITE();
+
+void CV_WRITE();
+
+void ARP_GATE();
 
 void ckOutput();
 

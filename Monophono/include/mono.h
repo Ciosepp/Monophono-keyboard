@@ -4,4 +4,6 @@
 #include <Arduino.h>
 
 void mono();
+
+void MONO_GATE();
 #endif

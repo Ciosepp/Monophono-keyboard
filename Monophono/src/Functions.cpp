@@ -47,6 +47,7 @@ void elabControls() {
     switch (ARP_STATE_RAW) {
         case 0:
             arpState = OFF;
+            arpeggioState = AWAITING_KEYPRESS;
             break;
 
         case 1:
@@ -72,6 +73,7 @@ void logic() {
     switch(arpState){
         case OFF:
             mono();
+            MONO_GATE();
         break;
         case HOLD:
             arpeggiatorHold();
@@ -82,7 +84,7 @@ void logic() {
     } 
 
     // dev
-    mono();
+    //mono();
 }
 
 void readInputs() {

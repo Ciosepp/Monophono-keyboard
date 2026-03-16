@@ -37,9 +37,15 @@ int arpeggiatorNotes[MAX_ARP_SEQUENCE_LENGTH];
 arpeggiatorMode arpMode;
 arpeggiatorState arpState;
 
+bool isFirstArpegio = true;
+
 
 short NOTE;	//0 -> N_KEYS-1
+short OLD_NOTE;	//0 -> N_KEYS-1
 int voltages[61];
+
+uint8_t GATE;
+bool GATE_STACCATO = true;
 
 
 

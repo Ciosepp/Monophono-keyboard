@@ -11,15 +11,12 @@ bool isInCycle = false;
 
 bool arpLatch = false;
 
-enum ArpeggiatorStates {
-    AWAITING_KEYPRESS,
-    PLAYING,
-};
-
 uint8_t arpSavedNotes[N_ARPEGGIATOR_VOICE];
 uint8_t nArpNotes=0;
 
-void arpSampler(){`
+ArpeggioStates arpeggioState = AWAITING_KEYPRESS;
+
+void arpSampler(){
 	nArpNotes = nPressedKeys;
 	if (nArpNotes > N_ARPEGGIATOR_VOICE) nArpNotes = N_ARPEGGIATOR_VOICE;
 
@@ -66,7 +63,6 @@ uint8_t arpPlayer(bool EN, uint8_t mode, uint8_t octExt){
 		if(!isUPverse)isUPverse=true;
 	} 
 
-
 	if (EN && isRisingEdge)
 	{
 		switch (mode)
@@ -110,6 +106,17 @@ uint8_t arpPlayer(bool EN, uint8_t mode, uint8_t octExt){
 	}
 	return currentArpNoteIndex;
 }
+uint8_t GATE_arpHold(){
+	return (nPressedKeys >0)&&clockRaw;
+}
+
+uint8_t GATE_arpLatch(){
+	if (arpeggioState == AWAITING_KEYPRESS && nPressedKeys >0){
+		arpeggioState = PLAYING;
+	}
+	
+	return (nPressedKeys >0)&&clockRaw&&(arpeggioState == PLAYING);
+}
 
 void arpeggiatorHold() {
 	arpSampler(); //countinuos sampling
@@ -119,5 +126,12 @@ void arpeggiatorHold() {
 }
 
 void arpeggiatorLatch(){
+	if(KEYDOWN){ //sampling only when a key is pressed
+		arpSampler();
+		arpElabNote();//process arp notes
+		NOTE = arpPlayer(true, ARP_MODE_RAW, ARP_OCTAVE);
+	} else {
+		NOTE = arpPlayer(false, ARP_MODE_RAW, ARP_OCTAVE);
+	}
     
 }
