@@ -50,8 +50,13 @@ void pinInit() {
 }
 
 void dacInit() {  // funzione che genera le tensioni specifiche per ogni tasto
-    dac.begin();
-    dac.writeDAC(0);
+    if(dac.begin()){
+        Serial.print("DAC OK");
+        dac.writeDAC(0);
+    }
+    else
+        Serial.print("DAC KO");
+
 
     for (uint32_t i = 0; i < N; i++) {
         double x = 4095.0 / 60.0;
@@ -94,8 +99,13 @@ void scanKeyboard() {
     nChangedKeys =0;
 
     for (int i = 0; i < N_KEYS; i++) {
+       
         bool oldKeyState = KeyStates[i];
         KeyStates[i] = scanKey(i);
+
+        if(debugEnable==1 && (i==1 ||i==3 ||i==5)){
+            KeyStates[i]=true;
+        }
         //store pressed keys into pressedNotes
         if(KeyStates[i]== 1 ){
             pressedNotes[nPressedKeys] = i;
@@ -124,12 +134,26 @@ void scanControls() {
     ARP_MODE_RAW = analogRead(ARP_MODE_PIN);
     ARP_STATE_RAW = analogRead(ARP_ON_PIN);
     ARP_OCTAVE_RAW = analogRead(ARP_OCT_PIN);
+    if (debugEnable==1)
+    {
+       CK_AMT = 512;
+    // ARPEGIATOR
+        ARP_MODE_RAW = 400;
+        ARP_STATE_RAW = 400;
+        ARP_OCTAVE_RAW =1023;
+    }
+    
 }
 
 void scanClock() {
     oldClockRaw = clockRaw;
     // INPUT CLOCK
     clockRaw = digitalRead(CK_IN_PIN);
+    if (debugEnable==1){
+        clockRaw= BPM32.getClock();
+        BPM32.getClock();
+    }
+
     if (oldClockRaw == LOW and clockRaw == HIGH) {
         isRisingEdge = true;
     }

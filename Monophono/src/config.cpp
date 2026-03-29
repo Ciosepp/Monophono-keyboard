@@ -1,6 +1,10 @@
 #include "config.h"
 #include "cppQueue.h"
 
+const int version = 200;
+
+bool printFlag=false;
+
 //bolean vect contains key pressure states
 bool KeyStates[N_KEYS];		
 int8_t pressedNotes[N_KEYS];

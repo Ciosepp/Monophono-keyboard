@@ -61,49 +61,51 @@ uint8_t arpPlayer(bool EN, uint8_t mode, uint8_t octExt){
 	if (!EN){
 		if(!IS_FIRST_NOTE) IS_FIRST_NOTE =true;
 		if(!isUPverse)isUPverse=true;
+		currentArpNoteIndex = 0;
+		isUPverse=true;
 	} 
 
-	if (EN && isRisingEdge)
-	{
-		switch (mode)
-		{
+	if (EN && isRisingEdge){
+		switch (mode){
 			case 0://UP
+				if(IS_FIRST_NOTE)currentArpNoteIndex =0;
 				if(!IS_FIRST_NOTE){
 					currentArpNoteIndex = (currentArpNoteIndex +1)%limit;       
 				}
-			break;
-			
-			case 1://DOWN
-			currentArpNoteIndex = (currentArpNoteIndex -1)%limit;
-			break;
-			
-			case 2://UP-DOWN
-			if (isUPverse==true && !IS_FIRST_NOTE)
-			{
-				currentArpNoteIndex ++;
-				if (currentArpNoteIndex>=limit)
-				{
-					isUPverse=false;
-					break;
+				Serial.print("UP,");
+				break;
+				
+			case 1://UP-DOWN
+				
+				if(!IS_FIRST_NOTE){
+					       
+					currentArpNoteIndex += (isUPverse ? 1 : -1);
+					
+					if (currentArpNoteIndex >= limit - 1) {
+						currentArpNoteIndex = limit - 1;
+						isUPverse = false;
+					}
+					else if (currentArpNoteIndex <= 0) {
+						currentArpNoteIndex = 0;
+						isUPverse = true;
+					}	
 				}
+				Serial.println("U-D");	
+				break;
+				
+				case 2://DOWN
+					currentArpNoteIndex = (currentArpNoteIndex -1 + limit)%limit;
+					Serial.println("DOWN");
+				break;
 			}
-			if (isUPverse==false)
-			{
-				currentArpNoteIndex --;
-				if (currentArpNoteIndex<=0)
-				{
-					isUPverse=true;
-					break;
-				}
-			}
-			
-			break;
-			default:
-			break;
-		}
 		IS_FIRST_NOTE = false;
 		isRisingEdge = false;
-	}
+		Serial.print("limit: ");
+		Serial.print(limit);
+		Serial.print("  I: ");
+		Serial.print(currentArpNoteIndex);
+		Serial.println("");
+		}
 	return currentArpNoteIndex;
 }
 uint8_t GATE_arpHold(){
@@ -121,7 +123,7 @@ uint8_t GATE_arpLatch(){
 void arpeggiatorHold() {
 	arpSampler(); //countinuos sampling
 	arpElabNote();//process arp notes
-	NOTE = arpPlayer(nArpNotes >0 , ARP_MODE_RAW, ARP_OCTAVE);
+	NOTE = arpeggiatorNotes[arpPlayer(nArpNotes >0 , arpMode, ARP_OCTAVE)];
 
 }
 

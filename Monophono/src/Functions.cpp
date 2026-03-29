@@ -7,8 +7,13 @@
 #include "arpeggiator.h"
 
 void Init() {
+    Serial.print("MONOPHONO V");
+    Serial.print(version);
+    Serial.println("");
     pinInit();
+    Serial.println("pin INIT OK");
     dacInit();
+    Serial.println("DAC INIT OK");
 }
 
 bool noteDown(int i, bool* noteScan, bool* noteTrans) {
@@ -19,8 +24,8 @@ bool noteUp(int i, bool* noteScan, bool* noteTrans) {
 }
 
 void elabControls() {
-    ARP_MODE_RAW = map(ARP_MODE_RAW, 0, 1023, 0, 3);
-
+    //ARP_MODE_RAW = map(ARP_MODE_RAW, 0, 1023, 0, 3);
+    ARP_MODE_RAW = ARP_MODE_RAW /340;
     switch (ARP_MODE_RAW) {
         case 0:
             arpMode = UP;
@@ -42,7 +47,8 @@ void elabControls() {
             break;
     }
 
-    ARP_STATE_RAW = map(ARP_STATE_RAW, 0, 1023, 0, 2);
+    //ARP_STATE_RAW = map(ARP_STATE_RAW, 0, 1023, 0, 2);
+    ARP_STATE_RAW = ARP_STATE_RAW/340;
 
     switch (ARP_STATE_RAW) {
         case 0:
@@ -62,7 +68,7 @@ void elabControls() {
             break;
     }
 
-    ARP_OCTAVE = map(ARP_OCTAVE_RAW, 0, 1023, 0, 2);
+    ARP_OCTAVE =ARP_OCTAVE_RAW/350;
 
     CK_AMT = map(CK_AMT, 0, 1023, 60, 300);
 }

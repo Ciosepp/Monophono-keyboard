@@ -7,7 +7,7 @@
 
 #define N_OCTAVES_MAX 3
 
-#define debugEnable 0
+#define debugEnable 1
 
 #define N_KEYS 49
 
@@ -16,6 +16,9 @@
 
 #define MAX_ARP_SEQUENCE_LENGTH (N_ARPEGGIATOR_VOICE * N_OCTAVES_MAX)
 	
+
+extern const int version;
+extern bool printFlag;
 //bolean vect contains key pressure states
 extern bool KeyStates[N_KEYS];		
 extern short nPressedKeys;
